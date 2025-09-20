@@ -31,17 +31,65 @@
             background: linear-gradient(135deg, #ff6b6b, #ee5a52);
             color: white;
             text-align: center;
-            padding: 30px 20px;
+            padding: 30px 20px 20px 20px;
         }
 
         .header h1 {
             font-size: 28px;
             font-weight: bold;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
         }
 
-        .menu-items {
+        /* Kategori Sekmeleri */
+        .category-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 5px;
+            margin-bottom: 0;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .tab.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .tab:hover {
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Menü İçeriği */
+        .menu-content {
             padding: 20px;
+        }
+
+        .category-content {
+            display: none;
+        }
+
+        .category-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .menu-item {
@@ -62,7 +110,37 @@
             width: 100%;
             height: 200px;
             object-fit: cover;
+            object-position: center center;
             border-radius: 15px 15px 0 0;
+            /* Zoom seviyesini kontrol etmek için */
+            transform: scale(0.85);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+
+        .item-image:hover {
+            transform: scale(0.9);
+        }
+
+        /* Fotoğraf container'ı için */
+        .image-container {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 15px 15px 0 0;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Zoom seviyesi farklı olan fotoğraflar için özel sınıflar */
+        .item-image.no-zoom {
+            transform: scale(1);
+        }
+
+        .item-image.less-zoom {
+            transform: scale(0.75);
         }
 
         .item-content {
@@ -103,6 +181,19 @@
             font-size: 14px;
         }
 
+        .empty-category {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+
+        .empty-category .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
         @media (max-width: 480px) {
             .container {
                 margin: 0;
@@ -112,6 +203,11 @@
             body {
                 padding: 0;
             }
+
+            .tab {
+                font-size: 14px;
+                padding: 10px 12px;
+            }
         }
     </style>
 </head>
@@ -119,59 +215,123 @@
     <div class="container">
         <div class="header">
             <h1>Komagene Çiğ Köfte</h1>
-        </div>
-
-        <div class="menu-items">
-            <div class="menu-item">
-                <img src="durum.jpg" alt="Çiğköfte Dürüm" class="item-image">
-                <div class="item-content">
-                    <div class="item-name">Çiğköfte Dürüm Menü</div>
-                    <div class="item-description">
-                        Çiğ Köfte Dürüm (90 gr. çiğ köfte, tek lavaş, seçeceğiniz 5 çeşit garnitür, seçeceğiniz 2 çeşit sos) + Komagene Ayran (17 cl.)
-                    </div>
-                    <div class="item-price">
-                        <span class="price">190₺</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="menu-item">
-                <img src="susi.jpg" alt="Çiğköfte Suşi" class="item-image">
-                <div class="item-content">
-                    <div class="item-name">Doritoslu Suşi (Fındıklı) Menü</div>
-                    <div class="item-description">
-                        Komagene Şuşi (Fındıklı)(Dolgun lavaş, 100 gr. çiğ köfte, roka, maydanoz, nane, salatalık turşusu, salatalık, havuç, mor soğan, tako peyniri, burger sos, fındık) + Ayran (17 cl.)
-                    </div>
-                    <div class="item-price">
-                        <span class="price">235₺</span>
-                    </div>
-                </div>
+            <div class="category-tabs">
+                <div class="tab active" onclick="switchCategory('cigkofte')">Çiğköfteler</div>
+                <div class="tab" onclick="switchCategory('yemekler')">Yemekler</div>
+                <div class="tab" onclick="switchCategory('mezeler')">Mezeler</div>
             </div>
         </div>
 
-        <div class="menu-items">
-            <div class="menu-item">
-                <img src="obur_ayran.jpg" alt="obur ayran" class="item-image">
-                <div class="item-content">
-                    <div class="item-name">Obur Ayran Menü</div>
-                    <div class="item-description">
-                        Oburgene (Hamburger ekmeği, 125 gr. çiğ köfte, göbek marul, maydanoz, nane, domates, salatalık turşusu, barbekü sos, burger sos) + Komagene Ayran (17 cl.)
+        <div class="menu-content">
+            <!-- Çiğköfteler Kategorisi -->
+            <div class="category-content active" id="cigkofte">
+                <div class="menu-item">
+                    <img src="durum.jpg" alt="Çiğköfte Dürüm" class="item-image">
+                    <div class="item-content">
+                        <div class="item-name">Çiğköfte Dürüm</div>
+                        <div class="item-description">
+                            Çiğ Köfte Dürüm (90 gr. çiğ köfte, tek lavaş, seçeceğiniz 5 çeşit garnitür, seçeceğiniz 2 çeşit sos) + Komagene Ayran (17 cl.)
+                        </div>
+                        <div class="item-price">
+                            <span class="price">120₺</span>
+                        </div>
                     </div>
-                    <div class="item-price">
-                        <span class="price">145₺</span>
+                </div>
+
+                <div class="menu-item">
+                    <img src="susi.jpg" alt="Çiğköfte Suşi" class="item-image">
+                    <div class="item-content">
+                        <div class="item-name">Doritoslu Suşi</div>
+                        <div class="item-description">
+                            Komagene Şuşi (Fındıklı)(Dolgun lavaş, 100 gr. çiğ köfte, roka, maydanoz, nane, salatalık turşusu, salatalık, havuç, mor soğan, tako peyniri, burger sos, fındık) + Ayran (17 cl.)
+                        </div>
+                        <div class="item-price">
+                            <span class="price">150₺</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="menu-item">
-                <img src="Tako.jpg" alt="Tako " class="item-image">
-                <div class="item-content">
-                    <div class="item-name">Tako</div>
-                    <div class="item-description">
-                        2 Adet Çiğ Köfte Tako + Komagene Ayran (17 cl.)
+            <!-- Yemekler Kategorisi -->
+            <div class="category-content" id="yemekler">
+                <div class="menu-item">
+                    <img src="nohutpilav.jpg" alt="Nohut Pilav" class="item-image">
+                    <div class="item-content">
+                        <div class="item-name">Nohut Pilav</div>
+                        <div class="item-description">
+                            Nohut pilav (150gr) + Komagene Ayran (17cl.)
+                        </div>
+                        <div class="item-price">
+                            <span class="price">100₺</span>
+                        </div>
                     </div>
-                    <div class="item-price">
-                        <span class="price">225₺</span>
+                </div>
+
+                <div class="menu-item">
+                    <img src="tavukpilav.jpg" alt="Tavuk Pilav" class="item-image">
+                    <div class="item-content">
+                        <div class="item-name">Tavuk Pilav</div>
+                        <div class="item-description">
+                            Tavuklu Pilav (150gr) + Komagene Ayran (17cl.)
+                        </div>
+                        <div class="item-price">
+                            <span class="price">120₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <img src="pilavüstü.png" alt="Pilavüstü" class="item-image">
+                    <div class="item-content">
+                        <div class="item-name">Pilav Üstü Tavuk Döner</div>
+                        <div class="item-description">
+                            Pilav Üstü Tavuk Döner (200gr) + Komagene Ayran (17cl.)
+                        </div>
+                        <div class="item-price">
+                            <span class="price">130₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <img src="proteintavuk.png" alt="Bol Tavuklu Pilav" class="item-image">
+                    <div class="item-content">
+                        <div class="item-name">Bol Tavuklu Pilav</div>
+                        <div class="item-description">
+                            Bol tavuklu pilav (400gr,60gr protein) Komagene Ayran (17cl.)
+                        </div>
+                        <div class="item-price">
+                            <span class="price">220₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <img src="kurubiber.png" alt="Kuru Biber Dolması" class="item-image">
+                    <div class="item-content">
+                        <div class="item-name">Kuru Biber Dolması</div>
+                        <div class="item-description">
+                            Kuru Biber Dolması (200gr)
+                        </div>
+                        <div class="item-price">
+                            <span class="price">110₺</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mezeler Kategorisi -->
+            <div class="category-content" id="mezeler">
+                <div class="menu-item">
+                    <img src="amerikan.png" alt="Amerikan Salatası" class="item-image">
+                    <div class="item-content">
+                        <div class="item-name">Amerikan Salatası</div>
+                        <div class="item-description">
+                           Amerikan salatası (150gr)
+                        </div>
+                        <div class="item-price">
+                            <span class="price">75₺</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -183,6 +343,22 @@
     </div>
 
     <script>
+        function switchCategory(categoryId) {
+            // Tüm sekmeleri pasif yap
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Tüm kategori içeriklerini gizle
+            const contents = document.querySelectorAll('.category-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Seçili sekmeyi aktif yap
+            event.target.classList.add('active');
+            
+            // Seçili kategori içeriğini göster
+            document.getElementById(categoryId).classList.add('active');
+        }
+
         // Sayfa yüklendiğinde animasyon efekti
         window.addEventListener('load', function() {
             const menuItems = document.querySelectorAll('.menu-item');
@@ -196,4 +372,3 @@
     </script>
 </body>
 </html>
-
