@@ -503,17 +503,22 @@
 
     <script>
         function switchCategory(categoryId) {
+            // Tüm sekmeleri pasif yap
             const tabs = document.querySelectorAll('.tab');
             tabs.forEach(tab => tab.classList.remove('active'));
             
+            // Tüm kategori içeriklerini gizle
             const contents = document.querySelectorAll('.category-content');
             contents.forEach(content => content.classList.remove('active'));
-
+            
+            // Seçili sekmeyi aktif yap
             event.target.classList.add('active');
             
+            // Seçili kategori içeriğini göster
             document.getElementById(categoryId).classList.add('active');
         }
-     
+
+        // Sayfa yüklendiğinde animasyon efekti
         window.addEventListener('load', function() {
             const menuItems = document.querySelectorAll('.menu-item');
             menuItems.forEach((item, index) => {
