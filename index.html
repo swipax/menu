@@ -217,7 +217,7 @@
             <h1>Komagene Çiğ Köfte</h1>
             <div class="category-tabs">
                 <div class="tab active" onclick="switchCategory('cigkofte')">Çiğköfteler</div>
-                <div class="tab" onclick="switchCategory('yemekler')">Yemekler</div>
+                <div class="tab" onclick="switchCategory('yemekler')">Pilavlar</div>
                 <div class="tab" onclick="switchCategory('mezeler')">Mezeler</div>
             </div>
         </div>
@@ -234,19 +234,6 @@
                         </div> 
                         <div class="item-price">
                             <span class="price">110₺</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="menu-item">
-                    <img src="doubble.png" alt="Double Dürüm" class="item-image">
-                    <div class="item-content">
-                        <div class="item-name">Double Dürüm</div>
-                        <div class="item-description">
-                            Çiğ Köfte Double Dürüm + (komagene Ayran (17 cl.)
-                        </div> 
-                        <div class="item-price">
-                            <span class="price">140₺</span>
                         </div>
                     </div>
                 </div>
@@ -277,7 +264,23 @@
                     </div>
                 </div>
 
+
+
                 <div class="menu-item">
+                    <img src="doubble.png" alt="Double Dürüm" class="item-image">
+                    <div class="item-content">
+                        <div class="item-name">Double Dürüm</div>
+                        <div class="item-description">
+                            Çiğ Köfte Double Dürüm + (komagene Ayran (17 cl.)
+                        </div> 
+                        <div class="item-price">
+                            <span class="price">140₺</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="menu-item"> 
                     <img src="susi.jpg" alt="Çiğköfte Suşi" class="item-image">
                     <div class="item-content">
                         <div class="item-name">Doritoslu(Fındıklı,Susamlı) Suşi</div>
@@ -322,15 +325,28 @@
                 <div class="menu-item">
                     <img src="pilavüstü.png" alt="Pilavüstü" class="item-image">
                     <div class="item-content">
-                        <div class="item-name">Pilav Üstü Tavuk Döner</div>
+                        <div class="item-name">Pilav Üstü Tavuk Döner(250gr)</div>
                         <div class="item-description">
-                            Pilav Üstü Tavuk Döner (200gr) + Komagene Ayran (17cl.)
+                            Pilav Üstü Tavuk Döner (250gr) + Komagene Ayran (17cl.)
                         </div>
                         <div class="item-price">
                             <span class="price">130₺</span>
                         </div>
                     </div>
                 </div>
+
+                <div class="menu-item">
+                    <img src="pilavüstü.png" alt="Pilavüstüü" class="item-image">
+                    <div class="item-content">
+                        <div class="item-name">Pilav Üstü Tavuk Döner(400gr)</div>
+                        <div class="item-description">
+                            Pilav Üstü Tavuk Döner (400gr) + Komagene Ayran (17cl.)
+                        </div>
+                        <div class="item-price">
+                            <span class="price">200₺</span>
+                        </div>
+                    </div>
+                </div>                
 
                 <div class="menu-item">
                     <img src="proteintavuk.png" alt="Bol Tavuklu Pilav" class="item-image">
@@ -353,7 +369,7 @@
                             Büyük boy tavuklu pilav (500gr) + Komagene Ayran (17cl.)
                         </div>
                         <div class="item-price">
-                            <span class="price">180₺</span>
+                            <span class="price">240₺</span>
                         </div>
                     </div>
                 </div>
@@ -487,22 +503,17 @@
 
     <script>
         function switchCategory(categoryId) {
-            // Tüm sekmeleri pasif yap
             const tabs = document.querySelectorAll('.tab');
             tabs.forEach(tab => tab.classList.remove('active'));
             
-            // Tüm kategori içeriklerini gizle
             const contents = document.querySelectorAll('.category-content');
             contents.forEach(content => content.classList.remove('active'));
-            
-            // Seçili sekmeyi aktif yap
+
             event.target.classList.add('active');
             
-            // Seçili kategori içeriğini göster
             document.getElementById(categoryId).classList.add('active');
         }
-
-        // Sayfa yüklendiğinde animasyon efekti
+     
         window.addEventListener('load', function() {
             const menuItems = document.querySelectorAll('.menu-item');
             menuItems.forEach((item, index) => {
