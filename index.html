@@ -15,7 +15,12 @@
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 0;
+            padding-right: 0;
+            margin: 0;
+            overflow-x: hidden;
         }
 
         .container {
@@ -25,6 +30,17 @@
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             overflow: hidden;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: containerAppear 0.4s ease 0.1s both;
+            position: relative;
+        }
+
+        @keyframes containerAppear {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .header {
@@ -32,6 +48,8 @@
             color: white;
             text-align: center;
             padding: 30px 20px 20px 20px;
+            position: relative;
+            overflow: hidden;
         }
 
         .header h1 {
@@ -39,38 +57,196 @@
             font-weight: bold;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
             margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(-30px);
+            animation: titleSlide 0.4s ease 0.3s both;
         }
 
-        /* Kategori Sekmeleri */
+        @keyframes titleSlide {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Kategori Sekmeleri Container */
         .category-tabs {
             display: flex;
             background: rgba(255,255,255,0.1);
             border-radius: 15px;
             padding: 5px;
             margin-bottom: 0;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: tabsSlide 0.4s ease 0.5s both;
+        }
+
+        @keyframes tabsSlide {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sürekli RGB LED Şerit Efekti - Dış katman */
+        .category-tabs::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: linear-gradient(90deg, 
+                #ff0000 0%,
+                #ff4000 12.5%,
+                #ff8000 25%,
+                #ffff00 37.5%,
+                #80ff00 50%,
+                #00ff80 62.5%,
+                #00ffff 75%,
+                #8000ff 87.5%,
+                #ff0080 100%);
+            border-radius: 23px;
+            z-index: -1;
+            background-size: 300% 100%;
+            animation: continuousLedStrip 3s linear infinite 1.2s;
+            opacity: 0;
+        }
+
+        /* Sürekli akan RGB ışık animasyonu */
+        @keyframes continuousLedStrip {
+            0% {
+                opacity: 1;
+                background-position: 0% 0%;
+            }
+            100% {
+                opacity: 1;
+                background-position: 300% 0%;
+            }
+        }
+
+        /* Sürekli parlayan parçacık efekti */
+        .category-tabs::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: radial-gradient(circle at 20% 20%, rgba(255,107,107,0.4) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(238,90,82,0.4) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 70%, rgba(255,107,107,0.3) 0%, transparent 50%);
+            border-radius: 25px;
+            z-index: -2;
+            animation: continuousFloatingParticles 4s ease-in-out infinite 2s;
+            opacity: 0;
+        }
+
+        @keyframes continuousFloatingParticles {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1) rotate(0deg);
+            }
+            25% {
+                opacity: 0.7;
+                transform: scale(1.03) rotate(2deg);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.06) rotate(-2deg);
+            }
+            75% {
+                opacity: 0.8;
+                transform: scale(1.04) rotate(2deg);
+            }
         }
 
         .tab {
             flex: 1;
             text-align: center;
-            padding: 12px 16px;
+            padding: 12px 8px;
             border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            color: rgba(255,255,255,0.7);
+            background: transparent;
+            border: none;
+            color: white;
+            text-shadow: none;
+            position: relative;
+            z-index: 1;
+            animation: continuousTabColorWave 4s ease-in-out infinite 1s;
         }
 
-        .tab.active {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        @keyframes continuousTabColorWave {
+            0%, 100% {
+                color: white;
+                text-shadow: 0 0 8px rgba(255,255,255,0.4);
+            }
+            16% {
+                color: #ff3366;
+                text-shadow: 0 0 12px rgba(255,51,102,0.7);
+            }
+            32% {
+                color: #3366ff;
+                text-shadow: 0 0 12px rgba(51,102,255,0.7);
+            }
+            48% {
+                color: #9933ff;
+                text-shadow: 0 0 12px rgba(153,51,255,0.7);
+            }
+            64% {
+                color: #33ff66;
+                text-shadow: 0 0 12px rgba(51,255,102,0.7);
+            }
+            80% {
+                color: #ff9933;
+                text-shadow: 0 0 12px rgba(255,153,51,0.7);
+            }
         }
 
         .tab:hover {
-            color: white;
             transform: translateY(-1px);
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .tab.active {
+            transform: translateY(-2px) scale(1.05);
+            font-weight: 700;
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            animation: continuousActiveTabColorWave 3s ease-in-out infinite 1s;
+        }
+
+        @keyframes continuousActiveTabColorWave {
+            0%, 100% {
+                color: white;
+                text-shadow: 0 0 10px rgba(255,255,255,0.5);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            }
+            20% {
+                color: #ff3366;
+                text-shadow: 0 0 15px rgba(255,51,102,0.9);
+                box-shadow: 0 8px 25px rgba(255,51,102,0.6);
+            }
+            40% {
+                color: #3366ff;
+                text-shadow: 0 0 15px rgba(51,102,255,0.9);
+                box-shadow: 0 8px 25px rgba(51,102,255,0.6);
+            }
+            60% {
+                color: #9933ff;
+                text-shadow: 0 0 15px rgba(153,51,255,0.9);
+                box-shadow: 0 8px 25px rgba(153,51,255,0.6);
+            }
+            80% {
+                color: #33ff66;
+                text-shadow: 0 0 15px rgba(51,255,102,0.9);
+                box-shadow: 0 8px 25px rgba(51,255,102,0.6);
+            }
         }
 
         /* Menü İçeriği */
@@ -84,12 +260,18 @@
 
         .category-content.active {
             display: block;
-            animation: fadeIn 0.3s ease;
+            animation: fadeInUp 0.5s ease both;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
         }
 
         .menu-item {
@@ -99,6 +281,8 @@
             overflow: hidden;
             box-shadow: 0 8px 25px rgba(0,0,0,0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
         }
 
         .menu-item:hover {
@@ -112,7 +296,6 @@
             object-fit: cover;
             object-position: center center;
             border-radius: 15px 15px 0 0;
-            /* Zoom seviyesini kontrol etmek için */
             transform: scale(0.85);
             transform-origin: center;
             transition: transform 0.3s ease;
@@ -122,7 +305,6 @@
             transform: scale(0.9);
         }
 
-        /* Fotoğraf container'ı için */
         .image-container {
             width: 100%;
             height: 200px;
@@ -134,7 +316,6 @@
             justify-content: center;
         }
 
-        /* Zoom seviyesi farklı olan fotoğraflar için özel sınıflar */
         .item-image.no-zoom {
             transform: scale(1);
         }
@@ -185,13 +366,75 @@
             text-align: center;
             padding: 40px 20px;
             color: #7f8c8d;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .empty-category .icon {
             font-size: 48px;
             margin-bottom: 15px;
             opacity: 0.5;
+        }
+
+        .drink-item {
+            background: #f8f9fa;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .drink-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .drink-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            object-position: center center;
+            border-radius: 15px 15px 0 0;
+            transform: scale(1.2);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .drink-image:hover {
+            transform: scale(1);
+        }
+
+        .drink-content {
+            padding: 20px;
+        }
+
+        .drink-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .drink-description {
+            font-size: 14px;
+            color: #7f8c8d;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .drink-price {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .drink-price .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
         }
 
         @media (max-width: 480px) {
@@ -201,12 +444,15 @@
             }
             
             body {
-                padding: 0;
+                padding-top:5px;
+                padding-bottom: 5px;
+                padding-left: 0;
+                padding-right: 0;
             }
 
             .tab {
-                font-size: 14px;
-                padding: 10px 12px;
+                font-size: 13px;
+                padding: 12px 6px;
             }
         }
     </style>
@@ -219,6 +465,7 @@
                 <div class="tab active" onclick="switchCategory('cigkofte')">Çiğköfteler</div>
                 <div class="tab" onclick="switchCategory('yemekler')">Pilavlar</div>
                 <div class="tab" onclick="switchCategory('mezeler')">Mezeler</div>
+                <div class="tab" onclick="switchCategory('icecekler')">İçecekler</div>
             </div>
         </div>
 
@@ -264,8 +511,6 @@
                     </div>
                 </div>
 
-
-
                 <div class="menu-item">
                     <img src="doubble.png" alt="Double Dürüm" class="item-image">
                     <div class="item-content">
@@ -278,7 +523,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <div class="menu-item"> 
                     <img src="susi.jpg" alt="Çiğköfte Suşi" class="item-image">
@@ -494,6 +738,268 @@
                     </div>
                 </div>
             </div>
+
+            <!-- İçecekler Kategorisi -->
+            <div class="category-content" id="icecekler">
+                <div class="drink-item">
+                    <img src="icecekler/ayr.png" alt="Ayran" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Ayran</div>
+                        <div class="drink-description">
+                            Komagene özel ayran
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">80₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/cay.png" alt="Çay" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Çay</div>
+                        <div class="drink-description">
+                            Sıcak demli çay
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">20₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/büyülcay.png" alt="Double Çay" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Double Çay</div>
+                        <div class="drink-description">
+                            Çift bardak çay
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">30₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/trkahve.png" alt="Türk Kahvesi" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Türk Kahvesi</div>
+                        <div class="drink-description">
+                            Geleneksel Türk kahvesi
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">30₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/pepsi33cl.jpg" alt="Pepsi 33cl" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Pepsi 33cl</div>
+                        <div class="drink-description">
+                            Soğuk pepsi kutu
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">40₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/litrekola.png" alt="Pepsi 1 Litre" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Pepsi 1 Litre</div>
+                        <div class="drink-description">
+                            Büyük boy pepsi
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">80₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/fruko33cl.png" alt="Fruko 33cl" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Fruko 33cl</div>
+                        <div class="drink-description">
+                            Soğuk fruko kutu
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">40₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/yedigünportakal.png" alt="Yedigün 33cl" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Yedigün 33cl</div>
+                        <div class="drink-description">
+                            Soğuk yedigün kutu
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">40₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/yedigun1litre.png" alt="Yedigün 1 Litre" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Yedigün 1 Litre</div>
+                        <div class="drink-description">
+                            Büyük boy yedigün
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">80₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/iceteaseftali.png" alt="Ice Tea Şeftali 1 Litre" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Ice Tea Şeftali 1 Litre</div>
+                        <div class="drink-description">
+                            Şeftali aromalı soğuk çay
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">75₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/redbull.png" alt="Redbull" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Redbull</div>
+                        <div class="drink-description">
+                            Redbull
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">65₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/dimescesitleri.png" alt="Dimes" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Dimes</div>
+                        <div class="drink-description">
+                            Dimes çeşitleri (Karışık,Şeftali,Vişne)
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">45₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/avoyalimonciceksoda20cl.png" alt="Avoya Limon Soda" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Avoya Limon Soda</div>
+                        <div class="drink-description">
+                            Ferahlatıcı limonlu soda
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">25₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/kızılaysoda.png" alt="Kızılay Soda" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Kızılay Soda</div>
+                        <div class="drink-description">
+                            Klasik sade soda
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">25₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/bardaklimon.jpg" alt="Bardak Limon Suyu" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Bardak Limon Suyu</div>
+                        <div class="drink-description">
+                            Taze sıkılmış limon
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">20₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/bardaktursu.jpg" alt="Bardak Turşu Suyu" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Bardak Turşu Suyu</div>
+                        <div class="drink-description">
+                            Ev yapımı turşu suyu
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">20₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/salgam.png" alt="Şalgam" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Şalgam</div>
+                        <div class="drink-description">
+                            Geleneksel şalgam suyu
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">20₺</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="drink-item">
+                    <img src="icecekler/jacobs231.png" alt="Yedigün 33cl" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Jacobs</div>
+                        <div class="drink-description">
+                             Jacobs (2 si 1 Arada / 3'ü 1 Arada)
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">25₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/jacobsicepresso.png" alt="Jacobs Ice Espresso" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Jacobs Ice Espresso</div>
+                        <div class="drink-description">
+                            Soğuk espresso kahve
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">70₺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drink-item">
+                    <img src="icecekler/jacobsicepressolatte.png" alt="Jacobs Ice Espresso Latte" class="drink-image">
+                    <div class="drink-content">
+                        <div class="drink-name">Jacobs Ice Espresso Latte</div>
+                        <div class="drink-description">
+                            Soğuk espresso latte
+                        </div> 
+                        <div class="drink-price">
+                            <span class="price">70₺</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="footer">
@@ -505,7 +1011,7 @@
         function switchCategory(categoryId) {
             // Tüm sekmeleri pasif yap
             const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
+            tabs.forEach(tab => tab.classList.remove('active'))
             
             // Tüm kategori içeriklerini gizle
             const contents = document.querySelectorAll('.category-content');
@@ -518,19 +1024,20 @@
             document.getElementById(categoryId).classList.add('active');
         }
 
-        // Sayfa yüklendiğinde animasyon efekti
+        // Sayfa yüklendiğinde animasyon efektleri
         window.addEventListener('load', function() {
-            const menuItems = document.querySelectorAll('.menu-item');
-            menuItems.forEach((item, index) => {
-                setTimeout(() => {
-                    item.style.opacity = '1';
-                    item.style.transform = 'translateY(0)';
-                }, index * 200);
-            });
+            // Menü öğeleri animasyonu
+            setTimeout(() => {
+                const menuItems = document.querySelectorAll('.menu-item, .drink-item');
+                menuItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.transition = 'all 0.5s ease';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, index * 80);
+                });
+            }, 900); // Sekme animasyonları bittikten sonra başla
         });
     </script>
 </body>
 </html>
-
-
-
