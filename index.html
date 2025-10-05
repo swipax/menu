@@ -10,7 +10,6 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -22,7 +21,6 @@
             margin: 0;
             overflow-x: hidden;
         }
-
         .container {
             max-width: 400px;
             margin: 0 auto;
@@ -35,14 +33,12 @@
             animation: containerAppear 0.4s ease 0.1s both;
             position: relative;
         }
-
         @keyframes containerAppear {
             to {
                 opacity: 1;
                 transform: scale(1);
             }
         }
-
         .header {
             background: linear-gradient(135deg, #ff6b6b, #ee5a52);
             color: white;
@@ -51,7 +47,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .header h1 {
             font-size: 28px;
             font-weight: bold;
@@ -61,14 +56,12 @@
             transform: translateY(-30px);
             animation: titleSlide 0.4s ease 0.3s both;
         }
-
         @keyframes titleSlide {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-
         /* Kategori Sekmeleri Container */
         .category-tabs {
             display: flex;
@@ -79,89 +72,28 @@
             position: relative;
             opacity: 0;
             transform: translateY(30px);
-            animation: tabsSlide 0.4s ease 0.5s both;
+            animation: tabsSlide 0.4s ease 0.5s both, rotate 3s linear infinite;
+            border: 3px solid;
+            border-image-source: conic-gradient(from var(--angle), #ff0000, #ff8000, #ffff00, #80ff00, #00ff80, #0080ff, #8000ff, #ff0080, #ff0000);
+            border-image-slice: 1;
+            --angle: 0deg;
         }
-
         @keyframes tabsSlide {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-
-        /* Sürekli RGB LED Şerit Efekti - Dış katman */
-        .category-tabs::before {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: -8px;
-            right: -8px;
-            bottom: -8px;
-            background: linear-gradient(90deg, 
-                #ff0000 0%,
-                #ff4000 12.5%,
-                #ff8000 25%,
-                #ffff00 37.5%,
-                #80ff00 50%,
-                #00ff80 62.5%,
-                #00ffff 75%,
-                #8000ff 87.5%,
-                #ff0080 100%);
-            border-radius: 23px;
-            z-index: -1;
-            background-size: 300% 100%;
-            animation: continuousLedStrip 3s linear infinite 1.2s;
-            opacity: 0;
-        }
-
-        /* Sürekli akan RGB ışık animasyonu */
-        @keyframes continuousLedStrip {
-            0% {
-                opacity: 1;
-                background-position: 0% 0%;
-            }
-            100% {
-                opacity: 1;
-                background-position: 300% 0%;
+        @keyframes rotate {
+            to {
+                --angle: 360deg;
             }
         }
-
-        /* Sürekli parlayan parçacık efekti */
-        .category-tabs::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: radial-gradient(circle at 20% 20%, rgba(255,107,107,0.4) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(238,90,82,0.4) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 70%, rgba(255,107,107,0.3) 0%, transparent 50%);
-            border-radius: 25px;
-            z-index: -2;
-            animation: continuousFloatingParticles 4s ease-in-out infinite 2s;
-            opacity: 0;
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
         }
-
-        @keyframes continuousFloatingParticles {
-            0%, 100% {
-                opacity: 0.3;
-                transform: scale(1) rotate(0deg);
-            }
-            25% {
-                opacity: 0.7;
-                transform: scale(1.03) rotate(2deg);
-            }
-            50% {
-                opacity: 0.5;
-                transform: scale(1.06) rotate(-2deg);
-            }
-            75% {
-                opacity: 0.8;
-                transform: scale(1.04) rotate(2deg);
-            }
-        }
-
         .tab {
             flex: 1;
             text-align: center;
@@ -177,103 +109,39 @@
             text-shadow: none;
             position: relative;
             z-index: 1;
-            animation: continuousTabColorWave 4s ease-in-out infinite 1s;
         }
-
-        @keyframes continuousTabColorWave {
-            0%, 100% {
-                color: white;
-                text-shadow: 0 0 8px rgba(255,255,255,0.4);
-            }
-            16% {
-                color: #ff3366;
-                text-shadow: 0 0 12px rgba(255,51,102,0.7);
-            }
-            32% {
-                color: #3366ff;
-                text-shadow: 0 0 12px rgba(51,102,255,0.7);
-            }
-            48% {
-                color: #9933ff;
-                text-shadow: 0 0 12px rgba(153,51,255,0.7);
-            }
-            64% {
-                color: #33ff66;
-                text-shadow: 0 0 12px rgba(51,255,102,0.7);
-            }
-            80% {
-                color: #ff9933;
-                text-shadow: 0 0 12px rgba(255,153,51,0.7);
-            }
-        }
-
         .tab:hover {
             transform: translateY(-1px);
             background: rgba(255,255,255,0.1);
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
-
         .tab.active {
             transform: translateY(-2px) scale(1.05);
             font-weight: 700;
             background: rgba(255,255,255,0.2);
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            animation: continuousActiveTabColorWave 3s ease-in-out infinite 1s;
         }
-
-        @keyframes continuousActiveTabColorWave {
-            0%, 100% {
-                color: white;
-                text-shadow: 0 0 10px rgba(255,255,255,0.5);
-                box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            }
-            20% {
-                color: #ff3366;
-                text-shadow: 0 0 15px rgba(255,51,102,0.9);
-                box-shadow: 0 8px 25px rgba(255,51,102,0.6);
-            }
-            40% {
-                color: #3366ff;
-                text-shadow: 0 0 15px rgba(51,102,255,0.9);
-                box-shadow: 0 8px 25px rgba(51,102,255,0.6);
-            }
-            60% {
-                color: #9933ff;
-                text-shadow: 0 0 15px rgba(153,51,255,0.9);
-                box-shadow: 0 8px 25px rgba(153,51,255,0.6);
-            }
-            80% {
-                color: #33ff66;
-                text-shadow: 0 0 15px rgba(51,255,102,0.9);
-                box-shadow: 0 8px 25px rgba(51,255,102,0.6);
-            }
-        }
-
         /* Menü İçeriği */
         .menu-content {
             padding: 20px;
         }
-
         .category-content {
             display: none;
         }
-
         .category-content.active {
             display: block;
             animation: fadeInUp 0.5s ease both;
         }
-
         @keyframes fadeInUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(30px); 
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
-
         .menu-item {
             background: #f8f9fa;
             border-radius: 15px;
@@ -284,12 +152,10 @@
             opacity: 0;
             transform: translateY(30px);
         }
-
         .menu-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
-
         .item-image {
             width: 100%;
             height: 200px;
@@ -300,11 +166,9 @@
             transform-origin: center;
             transition: transform 0.3s ease;
         }
-
         .item-image:hover {
             transform: scale(0.9);
         }
-
         .image-container {
             width: 100%;
             height: 200px;
@@ -315,45 +179,37 @@
             align-items: center;
             justify-content: center;
         }
-
         .item-image.no-zoom {
             transform: scale(1);
         }
-
         .item-image.less-zoom {
             transform: scale(0.75);
         }
-
         .item-content {
             padding: 20px;
         }
-
         .item-name {
             font-size: 22px;
             font-weight: bold;
             color: #2c3e50;
             margin-bottom: 8px;
         }
-
         .item-description {
             font-size: 14px;
             color: #7f8c8d;
             line-height: 1.5;
             margin-bottom: 15px;
         }
-
         .item-price {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-
         .price {
             font-size: 24px;
             font-weight: bold;
             color: #e74c3c;
         }
-
         .footer {
             text-align: center;
             padding: 20px;
@@ -361,20 +217,17 @@
             color: #7f8c8d;
             font-size: 14px;
         }
-
         .empty-category {
             text-align: center;
             padding: 40px 20px;
             color: #7f8c8d;
             font-size: 15px;
         }
-
         .empty-category .icon {
             font-size: 48px;
             margin-bottom: 15px;
             opacity: 0.5;
         }
-
         .drink-item {
             background: #f8f9fa;
             border-radius: 15px;
@@ -385,12 +238,10 @@
             opacity: 0;
             transform: translateY(30px);
         }
-
         .drink-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
-
         .drink-image {
             width: 100%;
             height: 200px;
@@ -402,54 +253,46 @@
             transition: transform 0.3s ease;
             background: #f8f9fa;
         }
-
         .drink-image:hover {
             transform: scale(1);
         }
-
         .drink-content {
             padding: 20px;
         }
-
         .drink-name {
             font-size: 22px;
             font-weight: bold;
             color: #2c3e50;
             margin-bottom: 8px;
         }
-
         .drink-description {
             font-size: 14px;
             color: #7f8c8d;
             line-height: 1.5;
             margin-bottom: 15px;
         }
-
         .drink-price {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-
         .drink-price .price {
             font-size: 24px;
             font-weight: bold;
             color: #e74c3c;
         }
-
         @media (max-width: 480px) {
             .container {
                 margin: 0;
                 border-radius: 0;
             }
-            
+           
             body {
                 padding-top:5px;
                 padding-bottom: 5px;
                 padding-left: 0;
                 padding-right: 0;
             }
-
             .tab {
                 font-size: 13px;
                 padding: 12px 6px;
@@ -597,10 +440,10 @@
                     <div class="item-content">
                         <div class="item-name">Bol Tavuklu Pilav</div>
                         <div class="item-description">
-                            Bol tavuklu pilav (400gr,60gr protein) Komagene Ayran (17cl.)
+                            Bol tavuklu pilav (500gr,60gr protein) Komagene Ayran (17cl.)
                         </div>
                         <div class="item-price">
-                            <span class="price">230₺</span>
+                            <span class="price">250₺</span>
                         </div>
                     </div>
                 </div>
@@ -608,12 +451,12 @@
                 <div class="menu-item">
                     <img src="tavukpilav.jpg" alt="Tavuk Pilav 500gr" class="item-image">
                     <div class="item-content">
-                        <div class="item-name">Tavuk Pilav 500gr</div>
+                        <div class="item-name">Tavuk Pilav 400gr</div>
                         <div class="item-description">
-                            Büyük boy tavuklu pilav (500gr) + Komagene Ayran (17cl.)
+                            Power tavuklu pilav (400gr) + Komagene Ayran (17cl.)
                         </div>
                         <div class="item-price">
-                            <span class="price">250₺</span>
+                            <span class="price">230₺</span>
                         </div>
                     </div>
                 </div>
@@ -1041,3 +884,4 @@
     </script>
 </body>
 </html>
+
